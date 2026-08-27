@@ -1,0 +1,70 @@
+Full Stack --> Front End + Back End
+
+Front End: Front end is the visual and interactive layer of a website or application that users see directly and interact with through a wen browser or mobile app.
+
+Responsibilities of frontend
+----------------------------
+1.display webpages and user interface(UI)
+2.accept user input(forms, buttons, search boxes)
+3.validates user input before sending to the server
+4.call back end APIs to fetch and send data
+5.display the response received from the backend
+6.provides animations and interactive effects
+
+Back End: Back End is the server-side part of an application, user can't see directly, but it performs all business logic, security, data processing and database operations 
+It acts as brain of application
+
+Responsibilities of Back End
+---------------------------
+Process client request
+Implements business logic
+Connects with databases
+Performs CRUD operations
+Authenticates and authorise users
+Encrypts Passwords and sensitive data 
+generate reports
+send emails and notifications
+handles file upload and downloads
+returns response to the client
+
+MySQL Intro
+-----------
+
+
+API
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
