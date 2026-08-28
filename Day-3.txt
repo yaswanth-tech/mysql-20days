@@ -1,0 +1,60 @@
+SQL
+___
+Structured Query Language is standardized programming language specially designed for managing and manipulating relational databases, it provides declarative syntax that allows users to defines data they want to retrieve, insert, update or delete without specifying exactly how database should execute these operations.
+
+SQL COMMMANDS
+_____________
+DDL: Data Definition Language --> defines and modifies structure of a database objects(tables, schemas, indexes)
+
+--------------
+CREATE
+------
+database creation
+-----------------
+syntax
+------
+CREATE DATABASE DATABASE_NAME
+CREATE SCHEMA SCHEMA_NAME
+
+Create Table
+------------
+syntax
+------
+CREATE TABLE TABLE_NAME(
+Column-name Datatype(size) constraint,
+column-name Datatype(size) constraint
+-----------------
+-----------------
+column-n datatype(size)
+)
+
+ALTER
+DROP
+TRUNCATE
+RENAME
+ 
+DML: Data Manipulation Language --> manages data stored within database objects(insert, update, delete)
+
+--------------
+INSERT
+UPDATE
+DELETE
+
+DQL: Data Query Language --> used to fetch/retrieve data from database 
+
+--------------
+SELECT
+
+TCL: Transaction Control Language --> manage transactions to maintain data integrity 
+
+--------------
+COMMIT
+ROLLBACK
+SAVEPOINT
+
+DCL: Data Control Language --> manage permissions and access control on database objects 
+
+---------------
+GRANT
+REVOKE
+
