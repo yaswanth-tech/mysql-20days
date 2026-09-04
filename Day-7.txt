@@ -1,18 +1,43 @@
 MySQL Operators:
 ----------------
-OPERATORS
-_________
-Operator is a symbol it performs specific task
+-->MySQL operators are symbols used to perform operations on values in queries.
+Here are the main categories:
 
-SYNTAX
-------
-OPERAND OPERATOR OPERAND
+1.Arithmetic Operators:
+----------------------
+--> Used to perform mathematical operations.
 
-1)Arithmetic 
-2)Relational
-3)Logical
-4)Bitwise
-5)Assignment
+Operator	Description		Example
++		Addition		SELECT salary + bonus FROM employees;
+-		Subtraction		SELECT price - discount FROM products;
+*		Multiplication		SELECT quantity * unit_price FROM orders;
+/		Division		SELECT total_cost / quantity FROM orders;
+%		Modulus (remainder)	SELECT age % 2 FROM users;
+
+2.Comparison Operators:
+-----------------------
+--> Used to compare values in WHERE clauses and conditions.
+
+Operator	Description				Example
+=		Equal to			SELECT * FROM users WHERE age = 25;
+!= or <>	Not equal to			SELECT * FROM users WHERE age != 25;
+>		Greater than			SELECT * FROM users WHERE age > 30;
+<		Less than			SELECT * FROM users WHERE age < 20;
+>=		Greater than or equal to	SELECT * FROM users WHERE age >= 18;
+<=		Less than or equal to		SELECT * FROM users WHERE age <= 65;
+
+3.Logical Operators:
+--------------------
+--> Used to combine multiple conditions.
+
+Operator	Description				Example
+AND		Both conditions true		WHERE age > 18 AND city = 'London'
+OR		At least one condition true	WHERE age < 13 OR age > 65
+NOT		Negates a condition		WHERE NOT age = 30
+
+
+PRACTICE BY USING ABOVE OPERATORS:
+==================================
 
 mysql> select * from products;
 +------+--------------+--------+------+
@@ -573,112 +598,25 @@ mysql> select * from employees;
 |   15 | Nikhil Jain  | IT         |  49000 |        1 |
 +------+--------------+------------+--------+----------+
 5 rows in set (0.00 sec)
--------------------------------------------------------------------------------------------------------
-mysql> CREATE TABLE Projects (
-    ->    id INT,
-    ->    name VARCHAR(100),
-    ->    assignedto VARCHAR(100),
-    ->    start DATE,
-    ->    end DATE
-    -> );
-Query OK, 0 rows affected (0.04 sec)
 
-mysql> INSERT INTO Projects VALUES
-    -> (1, 'Website Revamp', 'Alice', '2024-01-15', '2024-03-01'),
-    -> (2, 'Mobile App', 'Bob', '2024-02-01', NULL),
-    -> (3, 'Data Migration', NULL, NULL, NULL),
-    -> (4, 'SEO Optimization', 'Eve', '2024-03-10', '2024-04-20'),
-    -> (5, 'Cloud Migration', NULL, '2024-03-15', NULL);
-Query OK, 5 rows affected (0.01 sec)
-Records: 5  Duplicates: 0  Warnings: 0
 
-mysql> select * from projects;
-+------+------------------+------------+------------+------------+
-| id   | name             | assignedto | start      | end        |
-+------+------------------+------------+------------+------------+
-|    1 | Website Revamp   | Alice      | 2024-01-15 | 2024-03-01 |
-|    2 | Mobile App       | Bob        | 2024-02-01 | NULL       |
-|    3 | Data Migration   | NULL       | NULL       | NULL       |
-|    4 | SEO Optimization | Eve        | 2024-03-10 | 2024-04-20 |
-|    5 | Cloud Migration  | NULL       | 2024-03-15 | NULL       |
-+------+------------------+------------+------------+------------+
-5 rows in set (0.00 sec)
 
-mysql> select * from projects where assignedto is null;
-+------+-----------------+------------+------------+------+
-| id   | name            | assignedto | start      | end  |
-+------+-----------------+------------+------------+------+
-|    3 | Data Migration  | NULL       | NULL       | NULL |
-|    5 | Cloud Migration | NULL       | 2024-03-15 | NULL |
-+------+-----------------+------------+------------+------+
-2 rows in set (0.00 sec)
 
-mysql> select * from projects where start is null;
-+------+----------------+------------+-------+------+
-| id   | name           | assignedto | start | end  |
-+------+----------------+------------+-------+------+
-|    3 | Data Migration | NULL       | NULL  | NULL |
-+------+----------------+------------+-------+------+
-1 row in set (0.00 sec)
 
-mysql> select * from projects where end is not null;
-+------+------------------+------------+------------+------------+
-| id   | name             | assignedto | start      | end        |
-+------+------------------+------------+------------+------------+
-|    1 | Website Revamp   | Alice      | 2024-01-15 | 2024-03-01 |
-|    4 | SEO Optimization | Eve        | 2024-03-10 | 2024-04-20 |
-+------+------------------+------------+------------+------------+
-2 rows in set (0.00 sec)
 
-mysql> select * from projects where assignedto is not null;
-+------+------------------+------------+------------+------------+
-| id   | name             | assignedto | start      | end        |
-+------+------------------+------------+------------+------------+
-|    1 | Website Revamp   | Alice      | 2024-01-15 | 2024-03-01 |
-|    2 | Mobile App       | Bob        | 2024-02-01 | NULL       |
-|    4 | SEO Optimization | Eve        | 2024-03-10 | 2024-04-20 |
-+------+------------------+------------+------------+------------+
-3 rows in set (0.00 sec)
----------------------------------------------------------------
-mysql> update projects set assignedto = 'Frank' where assignedto is null;
-Query OK, 2 rows affected (0.01 sec)
-Rows matched: 2  Changed: 2  Warnings: 0
 
-mysql> update projects set start = '2026-09-02' where start is null;
-Query OK, 1 row affected (0.01 sec)
-Rows matched: 1  Changed: 1  Warnings: 0
 
-mysql> update projects set name= 'completed' where end is not null;
-Query OK, 2 rows affected (0.01 sec)
-Rows matched: 2  Changed: 2  Warnings: 0
 
-mysql> select * from projects;
-+------+-----------------+------------+------------+------------+
-| id   | name            | assignedto | start      | end        |
-+------+-----------------+------------+------------+------------+
-|    1 | completed       | Alice      | 2024-01-15 | 2024-03-01 |
-|    2 | Mobile App      | Bob        | 2024-02-01 | NULL       |
-|    3 | Data Migration  | Frank      | 2026-09-02 | NULL       |
-|    4 | completed       | Eve        | 2024-03-10 | 2024-04-20 |
-|    5 | Cloud Migration | Frank      | 2024-03-15 | NULL       |
-+------+-----------------+------------+------------+------------+
-5 rows in set (0.00 sec)
-----------------------------------------------------------------------------------------------
-mysql> delete from projects where assignedto is null;
-Query OK, 0 rows affected (0.00 sec)
 
-mysql> delete from projects where start is null;
-Query OK, 0 rows affected (0.00 sec)
 
-mysql> delete from projects where end is not null;
-Query OK, 2 rows affected (0.01 sec)
 
-mysql> select * from projects;
-+------+-----------------+------------+------------+------+
-| id   | name            | assignedto | start      | end  |
-+------+-----------------+------------+------------+------+
-|    2 | Mobile App      | Bob        | 2024-02-01 | NULL |
-|    3 | Data Migration  | Frank      | 2026-09-02 | NULL |
-|    5 | Cloud Migration | Frank      | 2024-03-15 | NULL |
-+------+-----------------+------------+------------+------+
-3 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
