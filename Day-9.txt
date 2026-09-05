@@ -1,0 +1,48 @@
+Clauses
+_______
+clauses are used to control how data is selected, filtered, grouped, sorted or modified in SQL Queries.
+think of clauses like instructions given to database
+
+Where clause
+____________
+filter records based on specified conditions where clause can be used as comparison operations, logical operation .. etc
+
+syntax
+------
+select column1, column2
+from table
+where condition;
+
+Group By clause
+________________
+the group by clause is used to group rows having the same values in one or more columns. It is commonly used with aggregate functions such as sum(), min(), max(), avg(), count().
+
+syntax
+------
+select column-name, aggregate-function(column-name)'
+from table-name
+group by column-name;
+
+Having clause
+_____________
+the having clause is used to filter grouped records after group by clause. it is similar to where but it works on group instead of individual rows.
+
+syntax
+------
+select column-name,
+aggregate-function(column-name)
+from table-name group by column-name having condition;
+
+Order by clause
+_______________
+the order by clause is used to sort the result set in ascending(ASC) or descending(DESc) order
+
+asc--> ascending order by default
+desc --> descending order
+
+syntax
+------
+select column-name
+from table-name
+order by column-name asc;
+
