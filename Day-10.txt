@@ -1,0 +1,135 @@
+Numeric Functions 
+_________________
+abs() --> absolute value of a number
+ceil() --> rounded up
+floor() --> rounds down
+round() --> rounds a specific number of digits
+mod() --> modulo operation
+power() --> exponentiation
+sqrt() --> square root of a number
+log() --> logarithm value
+radian() --> radians to degree
+degree() --> degree to radians
+sign() --> returns 0 for 0, - values returns -1, positive for 1
+rand() --> generate random between 0 to 1
+greatest() --> return greatest value
+least() --> least value
+bin() --> binary number
+hex() --> hexadecimal number
+oct() --> oct number
+
+literals
+________
+x = 10
+print(x);//10
+
+x = 0o10          --> oct form 
+print(x);//8
+
+x = 0b10          --> 2's compliment(binary-0,1) 
+print(x);//2
+
+x = 0x10          --> hexa form- 16 form 0-9(a b c d e f)- if letters given
+print(x);//16 
+
+concat --> adds 
+lower() --> all converted to lower
+upper() --> all converted to upper
+substring() --> substring(column name, start, end) --> up to end is printed
+length() --> returns length 
+trim() --> removes spaces if any in first or last
+replace() --> removes the character or anything from specified column and update with new one (column, character, new_character)
+concat_ws() --> here we can add multiple columns with a character(character, multiple columns)
+position() --> here return position of selected character (character in column)
+right() --> return characters from right side first 
+left()  --> return characters from first
+reverse() --> reverse the column elements
+lpad() --> add extra from left if any thing is empty
+rpad() --> add extra from right  if any thing is empty
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
