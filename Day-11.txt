@@ -1,0 +1,112 @@
+SQL Date and time functions
+___________________________
+curdate() --> it returns the current date
+curtime() --> it returns current time
+now() --> returns current date and time
+date() --> extract date part
+time() --> extract time part
+year() --> extract year
+month() --> extract month
+day() --> extract day of month
+week() --> extract week number
+dayofweek() --> day of week
+date_add --> add time to date --> select date_add(now(), interval 10 day) as new_date;
+date_sub
+datediff
+ 
+ select date_format('2005-05-25','%W,%M,%d,%Y') as formatted_date;
++-----------------------+
+| formatted_date        |
++-----------------------+
+| Wednesday,May,25,2005 |
++-----------------------+
+
+ select str_to_date('2005-05-25', '%Y- %m- %d') as formatted_date;
++----------------+
+| formatted_date |
++----------------+
+| 2005-05-25     |
++----------------+
+
+mysql> select last_day(now()) as last_day_of_month;
++-------------------+
+| last_day_of_month |
++-------------------+
+| 2026-09-30        |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> select makedate(2005, 60) as result_date;
++-------------+
+| result_date |
++-------------+
+| 2005-03-01  |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select maketime(7,7,7) as result_date;
++-------------+
+| result_date |
++-------------+
+| 07:07:07    |
++-------------+
+
+mysql> select monthname(now()) as month_name;
++------------+
+| month_name |
++------------+
+| September  |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select dayname(now()) as day_name;
++----------+
+| day_name |
++----------+
+| Monday   |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select quarter(now()) as quarter_value;
++---------------+
+| quarter_value |
++---------------+
+|             3 |
++---------------+
+
+
+mysql> select sec_to_time(777) as time_value;
++------------+
+| time_value |
++------------+
+| 00:12:57   |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select time_to_sec('00:12:57') as total_seconds;
++---------------+
+| total_seconds |
++---------------+
+|           777 |
++---------------+
+
+
+Set Operators
+_____________
+union ---------> combines result from two queries and removes duplicate rows, columns must have the same number and type
+
+union all -----> combines results from two queries and includes all rows, including duplicates, column must have the same number and type
+
+intersect ------> returns rows that are common to both queries, columns must have the same number and type
+
+except ----------> returns rows from the first query that are not present in the second query, columns must have the same number and type
+
+
+JOINS
+______
+Inner join --> matched records from both tables
+Left Join --> matched records tables + left table records
+right join --> matched records tables + right table records
+full join --> inner join + right join + left join
+cross join --> it performs cartesian product
+
