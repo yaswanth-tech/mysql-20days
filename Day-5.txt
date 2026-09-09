@@ -1,0 +1,52 @@
+REVOKE
+______
+REVOKE PRIVILEGE ON TABLE_NAME FROM USER;
+
+
+AUTOINCREMENT
+_____________
+mysql> CREATE TABLE EMPLOYEES(
+    -> EMPID INT AUTO_INCREMENT PRIMARY KEY,
+    -> NAME VARCHAR(30),
+    -> DEPARTMENT VARCHAR(30)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+BACKUP TABLES
+_____________
+
+mysql> CREATE TABLE BACKUP_EMPLOYEES AS
+    -> SELECT * FROM EMPLOYEES;
+Query OK, 2 rows affected (0.03 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+SELECTING WITH WHERE CONDITION
+______________________________
+mysql> SELECT * FROM BACKUP_EMPLOYEES;
++-------+-------+------------+
+| EMPID | NAME  | DEPARTMENT |
++-------+-------+------------+
+|     1 | YASH  | CSE        |
+|     2 | LAKSH | ECE        |
++-------+-------+------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM BACKUP_EMPLOYEES
+    -> WHERE NAME = 'YASH';
++-------+------+------------+
+| EMPID | NAME | DEPARTMENT |
++-------+------+------------+
+|     1 | YASH | CSE        |
++-------+------+------------+
+1 row in set (0.00 sec)
+
+COMPUTED COLUMNS
+__________________
+mysql> CREATE TABLE PRODUCTS(
+    -> PID INT AUTO_INCREMENT PRIMARY KEY,
+    -> PNAME VARCHAR(70),
+    -> PRICE DECIMAL(10,2),
+    -> QUANTITY INT,
+    -> TOTALAMOUNT DECIMAL(10,2) GENERATED ALWAYS AS (PRICE * QUANTITY)STORED
+    -> );
+Query OK, 0 rows affected (0.03 sec)
