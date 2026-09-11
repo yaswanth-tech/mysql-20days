@@ -1,0 +1,152 @@
+What is sub-query?
+-a sub query is a query inside another query.
+- it is written inside parentheses() and its result is used by he outer query.
+
+-it is also called as inner query, nested query, inner select.
+
+General Syntax
+---------------
+select column-list
+from table
+where column operator(select column from table wgere condition);
+
+purpose of subquery
+-------------------
+to breakdown complex problems into smaller queries
+to use the result of one query as input to another
+to avoid multiple steps(write in a single query instead of temp tables)
+
+types of subqueries
+-------------------
+1.single row subquery
+======================
+single row subqueries returns exactly one row and one column, they use comparison operators like =,>,<,<=,>=,!=
+
+characteristics
+---------------
+returns only one value
+can use single-comparison operators
+if subquery returns no rows or multiple rows, it causes an error
+
+syntax
+------
+select columns 
+from table where column operator(select column from table where condition);
+
+2.mutli-row subquery
+=====================
+multi-row subqueries(IN)
+------------------------
+A multi-row subquery return more than one row, then IN operator is used when you want to compare a value with multiple values returned by the subquery
+
+characteristics
+--------------
+returns multiple rows
+uses the IN operator 
+checks weather a value exists in the list returned by the subquery
+equivalent to multiple or conditions
+most commonly used for matching values
+
+syntax
+------
+select columns 
+from table in(select column from table where condition);
+
+multi-row subqueries(ANY/SOME)
+------------------------------
+multi-row subquery return multiple rows, when using any/some, the condition is true if it matches at least one value returned by the subquery.
+
+characteristics
+----------------
+returns multiple values
+ANY and SOME are interchangeable
+condition is true if any of the value satisfy the condition
+often used with IN, >ANY, <ANY ..etc
+
+syntax
+------
+select columns 
+from table where column operator ANY/SOME(select column from table where condition);
+
+multi-row subqueries(ALL)
+------------------------
+the ALL operator means the condition must be true for all values return by the subquery
+
+characteristics
+---------------
+condition must be true for all values in the subquery result.
+often used with >ALL, <ALL,>=ALL, <=ALL
+>ALL means greater than the minimum value
+<ALL means less than the minimum value.
+
+syntax
+------
+select columns 
+from table where column operator ALL(select column from table where condition);
+
+3.nested subquery
+=================
+nested subqueries are subqueries with subqueries, they can be multiple level deep and are executed from the innermost to the outermost
+
+characteristics
+---------------
+multiple levels of nesting
+inner queries execute first
+can combine different type of subqueries
+useful for complex conditions
+
+syntax
+------
+select column_list
+from table
+where column = (select column
+                from table 
+                where condition=(select column
+                                 from table
+                                  where condition));
+
+
+4.corelated subquery
+=====================
+corelated subqueries are subqueries that reference column from the outer query, unlike regular subqueries that execute once, corelated subqueries executes once for each row processed by the outer query
+
+characteristics
+---------------
+references column from the outer query
+executes multiple times(once per outer row)
+cannot be executed independently 
+often used with exists, not exists
+generally slower than non-corelated subqueries.
+
+syntax
+------
+select column
+from table1 outer alias
+where condition(select column
+                from table2 inner alias 
+                where inner-alias.column = outer-alais.coumn);
+
+5.exists/ not exists subquery
+=============================
+exists is used to test whether a subquery returns any rows, it returns true if subquery returns at least one row, false otherwise
+not exists returns true if the subquery returns no rows
+
+characteristics
+---------------
+returns TRUE/FALSE(Boolean result)
+more efficient than in large datasets
+often used with co related subqueries
+stops execution as soon as first match is found
+select clause is exists doesn't matter(often used select 1)
+
+syntax
+------
+select column
+from table1 
+where exists(select 1 from table2 where condition); 
+
+select column
+from table1 
+where not exists(select 1 from table2 where condition); 
+
+
