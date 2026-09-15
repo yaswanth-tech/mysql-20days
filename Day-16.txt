@@ -1,0 +1,128 @@
+Stored Procedures
+=================
+A stored procedure is a named, precompiled collection of one or more SQL statements that is stored inside the database and can be executed whenever required, instead of sending a long block of SQL code from an application every time, the application simple calls the procedure by name.
+
+why use stored procedures
+-------------------------
+performance: precompiled and cached by the database engine, so repeated execution is faster than sending raw SQL each time
+reusability: write the logic once, call it from many applications or scripts
+security: user can grant a execute permission on a procedure without granting direct access to the underlying tables
+reduced network traffic: a single call statement replaces many lines of SQL sent over the network
+maintainability: business logic is centralized in database, so changes are made in one place
+consistency: ensures the same validation or business rules applied every time, regardless of the application 
+
+create procedure syntax
+-----------------------
+DELIMETER // 
+CREATE PROCEDURE PROCEDURE_NAME(
+        [IN[OUT[INOUT] Parameter_name data_type, ..........
+)
+BEGIN
+     ----SQL statements logic
+     ----Declarations, conditions, loops .. etc
+END //
+DELIMITER;
+
+ADVANTAGES
+----------
+Faster execution after compilation
+reduced duplicate SQL
+supports transactions, loops, conditions, variables, cursors and exception handlers
+easy maintenance
+
+DISADVANTAGES
+-------------
+debugging can be difficult
+vendor specific syntax
+complex procedure may become hard to maintain
+
+IN Parameter
+------------
+Definition:
+An in parameter is used to pass a value into a stored procedure
+
+the procedure can use the value but changes made to parameter inside the procedure not returned the caller
+
+syntax
+------
+create procedure procedure_name(IN parameter_name data_type)
+BEGIN
+   SQL statements
+END;
+
+mysql> DELIMITER //
+mysql> create procedure getemployeebydepartments(in edepartment varchar(40))
+    -> begin
+    ->     select * from employees where department = edepartment;
+    -> END //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> DELIMITER ;
+mysql> CALL getemployeebydepartments('it');
++--------+----------+------------+----------+------------+-----------+------+
+| emp_id | emp_name | department | salary   | experience | city      | age  |
++--------+----------+------------+----------+------------+-----------+------+
+|    101 | Ravi     | IT         | 45000.00 |          2 | Hyderabad |   24 |
+|    103 | Suresh   | IT         | 55000.00 |          5 | Hyderabad |   30 |
+|    106 | Sneha    | IT         | 50000.00 |          4 | Vizag     |   28 |
+|    110 | Manoj    | IT         | 70000.00 |          8 | Hyderabad |   35 |
++--------+----------+------------+----------+------------+-----------+------+
+4 rows in set (0.00 sec)
+
+OUT Parameter
+------------
+an out parameter is used to return a value from the stored procedure to the caller 
+the caller provides a variable to receive the result
+
+syntax
+------
+create procedure procedure_name(OUT parameter_name data_type)
+BEGIN
+SET PARAMETER_NAME = VALUE
+END;
+
+mysql> DELIMITER //
+mysql> create procedure max_salary(out max int)
+    -> begin
+    ->     select max(salary) into max from employees;
+    -> END //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> DELIMITER ;
+mysql> set @max = 0;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call max_salary(@max);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select @max;
++-------+
+| @max  |
++-------+
+| 70000 |
++-------+
+1 row in set (0.00 sec)
+
+mysql> delimiter //
+mysql> create procedure employee_salary(in eid int, out emp_sal decimal(10,2))
+    -> begin
+    ->     select salary into emp_sal from employees where emp_id = eid;
+    -> END //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> DELIMITER ;
+mysql> set @emp_sal = 0;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call employee_salary(105, @emp_sal);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select @emp_sal;
++----------+
+| @emp_sal |
++----------+
+| 60000.00 |
++----------+
+1 row in set (0.00 sec)
+
+
