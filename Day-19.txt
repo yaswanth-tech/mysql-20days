@@ -1,0 +1,283 @@
+PRACTICE ON STUDENTS DATABASE
+-----------------------------
+mysql> select first_name, last_name from students;
++------------+-----------+
+| first_name | last_name |
++------------+-----------+
+| Aarav      | Sharma    |
+| Diya       | Patel     |
+| Vihaan     | Rao       |
+| Ananya     | Singh     |
++------------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> select * from marks where score > 80;
++---------+------------+------------+---------+-------+
+| mark_id | student_id | subject_id | exam_id | score |
++---------+------------+------------+---------+-------+
+|       1 |          1 |        101 |       1 |    85 |
+|       2 |          1 |        102 |       1 |    90 |
+|       5 |          3 |        101 |       1 |    95 |
+|       6 |          1 |        101 |       2 |    88 |
+|       8 |          3 |        101 |       2 |    92 |
++---------+------------+------------+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> select * from exams order by exam_date desc;
++---------+-------------------+------------+
+| exam_id | exam_name         | exam_date  |
++---------+-------------------+------------+
+|       1 | Half-Yearly 2024  | 2024-09-15 |
+|       2 | Final Annual 2024 | 2024-03-20 |
++---------+-------------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT
+    ->     s.first_name,
+    ->     s.last_name,
+    ->     sub.subject_name,
+    ->     m.score
+    -> FROM Students s
+    -> JOIN Marks m
+    ->     ON s.student_id = m.student_id
+    -> JOIN Subjects sub
+    ->     ON m.subject_id = sub.subject_id;
++------------+-----------+--------------+-------+
+| first_name | last_name | subject_name | score |
++------------+-----------+--------------+-------+
+| Aarav      | Sharma    | Mathematics  |    85 |
+| Diya       | Patel     | Mathematics  |    75 |
+| Vihaan     | Rao       | Mathematics  |    95 |
+| Aarav      | Sharma    | Mathematics  |    88 |
+| Diya       | Patel     | Mathematics  |    79 |
+| Vihaan     | Rao       | Mathematics  |    92 |
+| Aarav      | Sharma    | Science      |    90 |
+| Diya       | Patel     | Science      |    60 |
++------------+-----------+--------------+-------+
+8 rows in set (0.01 sec)
+
+mysql> SELECT
+    ->     sub.subject_name,
+    ->     AVG(m.score) AS average_score
+    -> FROM Marks m
+    -> JOIN Subjects sub
+    ->     ON m.subject_id = sub.subject_id
+    -> GROUP BY sub.subject_id, sub.subject_name
+    -> ORDER BY average_score DESC
+    -> LIMIT 1;
++--------------+---------------+
+| subject_name | average_score |
++--------------+---------------+
+| Mathematics  |       85.6667 |
++--------------+---------------+
+1 row in set (0.01 sec)
+
+mysql> SELECT
+    ->     s.first_name,
+    ->     s.last_name,
+    ->     sub.subject_name,
+    ->     m.score
+    -> FROM Students s
+    -> JOIN Marks m
+    ->     ON s.student_id = m.student_id
+    -> JOIN Subjects sub
+    ->     ON m.subject_id = sub.subject_id
+    -> WHERE s.first_name = 'Aarav'
+    ->   AND s.last_name = 'Sharma';
++------------+-----------+--------------+-------+
+| first_name | last_name | subject_name | score |
++------------+-----------+--------------+-------+
+| Aarav      | Sharma    | Mathematics  |    85 |
+| Aarav      | Sharma    | Science      |    90 |
+| Aarav      | Sharma    | Mathematics  |    88 |
++------------+-----------+--------------+-------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT
+    ->     e.exam_name,
+    ->     SUM(m.score) AS total_score
+    -> FROM Exams e
+    -> JOIN Marks m
+    ->     ON e.exam_id = m.exam_id
+    -> GROUP BY e.exam_id, e.exam_name
+    -> HAVING SUM(m.score) > 250;
++-------------------+-------------+
+| exam_name         | total_score |
++-------------------+-------------+
+| Half-Yearly 2024  |         405 |
+| Final Annual 2024 |         259 |
++-------------------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT
+    ->     CONCAT(s.first_name, ' ', s.last_name) AS student_name,
+    ->     sub.subject_name,
+    ->     m.score,
+    ->     CASE
+    ->         WHEN m.score >= 40 THEN 'PASS'
+    ->         ELSE 'FAIL'
+    ->     END AS status
+    -> FROM Students s
+    -> JOIN Marks m
+    ->     ON s.student_id = m.student_id
+    -> JOIN Subjects sub
+    ->     ON m.subject_id = sub.subject_id;
++--------------+--------------+-------+--------+
+| student_name | subject_name | score | status |
++--------------+--------------+-------+--------+
+| Aarav Sharma | Mathematics  |    85 | PASS   |
+| Diya Patel   | Mathematics  |    75 | PASS   |
+| Vihaan Rao   | Mathematics  |    95 | PASS   |
+| Aarav Sharma | Mathematics  |    88 | PASS   |
+| Diya Patel   | Mathematics  |    79 | PASS   |
+| Vihaan Rao   | Mathematics  |    92 | PASS   |
+| Aarav Sharma | Science      |    90 | PASS   |
+| Diya Patel   | Science      |    60 | PASS   |
++--------------+--------------+-------+--------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT
+    ->     s.student_id,
+    ->     s.first_name,
+    ->     s.last_name
+    -> FROM Students s
+    -> LEFT JOIN Marks m
+    ->     ON s.student_id = m.student_id
+    -> WHERE m.student_id IS NULL;
++------------+------------+-----------+
+| student_id | first_name | last_name |
++------------+------------+-----------+
+|          4 | Ananya     | Singh     |
++------------+------------+-----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT
+    ->     CONCAT(s.first_name, ' ', s.last_name) AS student_name,
+    ->     m.score
+    -> FROM Students s
+    -> JOIN Marks m
+    ->     ON s.student_id = m.student_id
+    -> JOIN Subjects sub
+    ->     ON m.subject_id = sub.subject_id
+    -> WHERE sub.subject_name = 'Mathematics'
+    -> ORDER BY m.score DESC;
++--------------+-------+
+| student_name | score |
++--------------+-------+
+| Vihaan Rao   |    95 |
+| Vihaan Rao   |    92 |
+| Aarav Sharma |    88 |
+| Aarav Sharma |    85 |
+| Diya Patel   |    79 |
+| Diya Patel   |    75 |
++--------------+-------+
+6 rows in set (0.01 sec)
+
+mysql> SELECT MAX(score) AS second_highest_score
+    -> FROM Marks
+    -> WHERE score < (SELECT MAX(score) FROM Marks);
++----------------------+
+| second_highest_score |
++----------------------+
+|                   92 |
++----------------------+
+1 row in set (0.00 sec)
+
+
+PRACTICE ON JEEVAN_RAKSHA_PHARMACY DATABASE;
+
+mysql> select name, city from customers;
++--------------+-----------+
+| name         | city      |
++--------------+-----------+
+| Rahul Sharma | Mumbai    |
+| Priya Verma  | Delhi     |
+| Amit Patel   | Ahmedabad |
+| Sneha Reddy  | Hyderabad |
+| Vikram Singh | Mumbai    |
++--------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT name
+    -> FROM medicines
+    -> WHERE category IN ('Syrup', 'Injection');
++-------------+
+| name        |
++-------------+
+| Benadryl    |
+| Insulin Pen |
++-------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM orders
+    -> WHERE total_amount > 500;
++----------+-------------+------------+--------------+--------------+
+| order_id | customer_id | order_date | total_amount | payment_mode |
++----------+-------------+------------+--------------+--------------+
+|        4 |           1 | 2023-10-10 |       800.00 | UPI          |
+|        5 |           4 | 2023-10-12 |      1200.00 | Card         |
++----------+-------------+------------+--------------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> select phone from customers where city = 'mumbai';
++------------+
+| phone      |
++------------+
+| 9876543210 |
+| 7766554433 |
++------------+
+2 rows in set (0.00 sec)
+
+mysql> select count(*) from orders where payment_mode = 'upi';
++----------+
+| count(*) |
++----------+
+|        2 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT COUNT(*) AS medicine_count
+    -> FROM medicines m
+    -> JOIN suppliers s
+    ->     ON m.supplier_id = s.supplier_id
+    -> WHERE s.supplier_name = 'Apollo Distributors';
++----------------+
+| medicine_count |
++----------------+
+|              2 |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT
+    ->     c.name AS customer_name,
+    ->     o.order_id,
+    ->     o.order_date,
+    ->     o.total_amount
+    -> FROM customers c
+    -> JOIN orders o
+    ->     ON c.customer_id = o.customer_id;
++---------------+----------+------------+--------------+
+| customer_name | order_id | order_date | total_amount |
++---------------+----------+------------+--------------+
+| Rahul Sharma  |        1 | 2023-10-01 |       150.00 |
+| Rahul Sharma  |        4 | 2023-10-10 |       800.00 |
+| Priya Verma   |        2 | 2023-10-02 |       240.00 |
+| Amit Patel    |        3 | 2023-10-05 |        45.00 |
+| Sneha Reddy   |        5 | 2023-10-12 |      1200.00 |
++---------------+----------+------------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT
+    ->     payment_mode,
+    ->     SUM(total_amount) AS total_money_earned
+    -> FROM orders
+    -> GROUP BY payment_mode;
++--------------+--------------------+
+| payment_mode | total_money_earned |
++--------------+--------------------+
+| UPI          |             950.00 |
+| Card         |            1440.00 |
+| Cash         |              45.00 |
++--------------+--------------------+
+3 rows in set (0.00 sec)
